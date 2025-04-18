@@ -20,7 +20,7 @@ jobs:
     - name: Run the docker image
       run: docker run --name es01 --net elastic -p 9200:9200 -it -m 1GB docker.elastic.co/elasticsearch/elasticsearch:9.0.0
       env:
-        - ELASTIC_PASSWORD=changeme
+        ELASTIC_PASSWORD=changeme
     - name: Curl the image
       run: curl -XGET "https://localhost:9200/" -u elastic:changeme
 
