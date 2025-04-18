@@ -3,7 +3,7 @@ name: Build the main branch
 on: push
 
 jobs:
-  build:
+  before_build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -13,5 +13,20 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: 'maven'
-    - name: Sample docker command
-      run: docker --version
+    - name: Create network
+      run: docker network create elastic
+    - name: Pull docker image
+      run: docker pull docker.elastic.co/elasticsearch/elasticsearch-wolfi:9.0.0
+    - name: Run the docker image
+      run: docker run --name es01 --net elastic -p 9200:9200 -it -m 1GB docker.elastic.co/elasticsearch/elasticsearch:9.0.0
+      env:
+        - ELASTIC_PASSWORD=changeme
+    - name: Curl the image
+      run: curl -XGET "https://localhost:9200/" -u elastic:changeme
+
+  build:
+    runs-on: ubuntu-latest
+    needs: before_build
+    steps:
+    - name: Curl the image
+      run: curl -XGET "https://localhost:9200/" -u elastic:changeme
