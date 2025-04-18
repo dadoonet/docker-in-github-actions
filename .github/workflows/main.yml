@@ -18,7 +18,7 @@ jobs:
     - name: Pull docker image
       run: docker pull docker.elastic.co/elasticsearch/elasticsearch-wolfi:9.0.0
     - name: Run the docker image
-      run: docker run --name es01 --net elastic -p 9200:9200 -it -m 1GB docker.elastic.co/elasticsearch/elasticsearch:9.0.0
+      run: docker run --name es01 --net elastic -p 9200:9200 -m 1GB docker.elastic.co/elasticsearch/elasticsearch:9.0.0
       env:
         ELASTIC_PASSWORD: "changeme"
     - name: Curl the image
