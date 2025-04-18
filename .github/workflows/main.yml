@@ -1,19 +1,17 @@
 name: Build the main branch
 
-on:
-  push:
-    branches: [ main ]
+on: push
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up JDK 21 and Maven Central Repository
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-          cache: 'maven'
-      - name: Build the project
-        run: mvn clean install -DskipTests
+    - uses: actions/checkout@v4
+    - name: Set up JDK 21 and Maven Central Repository
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: 'maven'
+    - name: Build the project
+      run: mvn clean install -DskipTests
